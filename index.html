@@ -346,9 +346,20 @@
 
     <footer>Made with love for AKSHAY & ASWANI</footer>
 
-    <audio id="weddingMusic" preload="auto" loop src="./assets/audio/wedding-background.mpeg"></audio>
+    <audio
+      id="weddingMusic"
+      preload="auto"
+      loop
+    >
+      <source
+        src="./assets/audio/wedding-background.mp3"
+        type="audio/mpeg"
+      >
+    </audio>
+
     <aside class="music-player" aria-label="Wedding background music player">
       <div class="music-player__glow" aria-hidden="true"></div>
+      
       <button class="music-button music-button--primary" id="musicPlayPause" type="button" aria-label="Play music">
         <span id="musicPlayPauseIcon" aria-hidden="true">Play</span>
       </button>

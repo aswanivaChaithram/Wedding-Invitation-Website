@@ -221,7 +221,7 @@ function setupCalendar() {
   const button = document.getElementById("calendarButton");
   button.href = url;
   button.download = "akshay-aswani-wedding.ics";
-  
+
 }
 
 function getSavedMusicVolume() {
@@ -277,20 +277,51 @@ function fadeMusicTo(targetVolume, duration = MUSIC_FADE_IN_MS, afterFade) {
 }
 
 async function playMusic() {
+
   try {
+
     weddingMusic.loop = true;
+
     weddingMusic.volume = 0;
+
+    // Make sure the browser has loaded the audio
+    if (weddingMusic.readyState === 0) {
+      weddingMusic.load();
+    }
+
     await weddingMusic.play();
+
     isMusicPlaying = true;
+
     userPausedMusic = false;
-    isMusicMuted = preferredMusicVolume <= 0 ? true : isMusicMuted;
+
+    isMusicMuted =
+      preferredMusicVolume <= 0
+        ? true
+        : isMusicMuted;
+
     updateMusicButtons();
-    fadeMusicTo(isMusicMuted ? 0 : preferredMusicVolume, MUSIC_FADE_IN_MS);
+
+    fadeMusicTo(
+      isMusicMuted ? 0 : preferredMusicVolume,
+      MUSIC_FADE_IN_MS
+    );
+
     removeAutoplayFallback();
+
   } catch (error) {
+
+    console.error(
+      "Wedding music could not be played:",
+      error
+    );
+
     isMusicPlaying = false;
+
     updateMusicButtons();
+
   }
+
 }
 
 function pauseMusic() {
