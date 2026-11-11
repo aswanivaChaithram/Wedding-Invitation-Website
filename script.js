@@ -104,18 +104,32 @@ function updateCinema() {
 
 }
 
+
 function updateGallery() {
   const rect = gallery.getBoundingClientRect();
   const scrollable = rect.height - window.innerHeight;
   const progress = clamp(-rect.top / scrollable);
-  const overflow = Math.max(0, galleryTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.08);
-  galleryTrack.style.setProperty("--gallery-x", `${-overflow * progress}px`);
+
+  const overflow = Math.max(
+    0,
+    galleryTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.08
+  );
+
+  // Reduce horizontal scrolling speed on mobile
+  const isMobile = window.innerWidth <= 768;
+  const speed = isMobile ? 0.55 : 1;
+
+  galleryTrack.style.setProperty(
+    "--gallery-x",
+    `${-overflow * progress * speed}px`
+  );
 
   [...galleryTrack.children].forEach((item, index) => {
     const wave = Math.sin(progress * Math.PI * 2 + index * 0.7) * 14;
     item.style.setProperty("--item-y", `${wave.toFixed(1)}px`);
   });
 }
+
 
 let ticking = false;
 function onScroll() {
